@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: hometown_hub_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1607
+      POSTGRES_DB: hometown_hub
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    container_name: hometown_hub_api
+    environment:
+      DB_USER: postgres
+      DB_PASSWORD: 1607
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: hometown_hub
+      JWT_SECRET: my_super_secret_key_12345
+      PORT: 5001
+    ports:
+      - "5001:5001"
+    depends_on:
+      - postgres
+
+  frontend:
+    build: ./frontend
+    container_name: hometown_hub_web
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:

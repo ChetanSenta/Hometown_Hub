@@ -1,0 +1,45 @@
+services:
+  - type: web
+    name: hometown-hub-api
+    env: node
+    region: oregon
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5001
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DB_USER
+        fromDatabase:
+          name: hometown-hub-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: hometown-hub-db
+          property: password
+      - key: DB_HOST
+        fromDatabase:
+          name: hometown-hub-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: hometown-hub-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: hometown-hub-db
+          property: database
+      - key: CLIENT_URL
+        sync: false
+
+databases:
+  - name: hometown-hub-db
+    region: oregon
+    plan: free
+    databaseName: hometown_hub
+    user: hometown_user
