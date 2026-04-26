@@ -10,10 +10,10 @@ const postRoutes         = require('./routes/post');
 const eventRoutes        = require('./routes/event');
 const notificationRoutes = require('./routes/notification');
 const adminRoutes        = require('./routes/admin');
+const seedRoute          = require('./routes/seed');
 
 const app = express();
 
-// Build list of allowed origins
 const ALLOWED_ORIGINS = [
   'http://localhost:3000',
   process.env.CLIENT_URL,
@@ -22,9 +22,7 @@ const ALLOWED_ORIGINS = [
 
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow no-origin requests (Postman, curl, mobile)
     if (!origin) return callback(null, true);
-    // Allow all in development
     if (process.env.NODE_ENV !== 'production') return callback(null, true);
     if (ALLOWED_ORIGINS.includes(origin)) return callback(null, true);
     callback(new Error(`CORS blocked: ${origin}`));
@@ -38,11 +36,11 @@ app.options('*', cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Health check — Render pings this to keep service alive
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', message: 'Hometown Hub API is running', env: process.env.NODE_ENV });
+  res.json({ status: 'ok', message: 'Hometown Hub API is running' });
 });
 
+app.use('/api/run-seed', seedRoute);
 app.use('/api/auth',          authRoutes);
 app.use('/api/communities',   communityRoutes);
 app.use('/api/posts',         postRoutes);
@@ -62,8 +60,6 @@ async function startServer() {
   await testConnection();
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on port ${PORT}`);
-    console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
-    console.log(`Allowed origins: ${ALLOWED_ORIGINS.join(', ') || 'all (dev mode)'}`);
   });
 }
 
