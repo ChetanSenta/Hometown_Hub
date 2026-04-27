@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hometown Hub — Project Report</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #FF6B35;
+      --primary-dark: #e55a25;
+      --accent: #2EC4B6;
+      --dark: #1A1A2E;
+      --dark2: #16213E;
+      --text: #1A1A2E;
+      --text2: #4A4A6A;
+      --text3: #8888AA;
+      --surface: #ffffff;
+      --surface2: #F8F8FC;
+      --border: #E8E8F0;
+      --success: #10B981;
+      --warning: #F59E0B;
+      --purple: #845EC2;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; color: var(--text); background: var(--surface2); line-height: 1.7; }
+    h1,h2,h3,h4 { font-family: 'Sora', sans-serif; line-height: 1.3; }
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(26,26,46,0.97); backdrop-filter: blur(10px);
+      padding: 0 2rem; height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    /* NEW: Navbar container */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Brand (same as yours) */
+.nav-brand {
+  color: var(--primary);
+  font-family: 'Sora', sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-brand span { color: white; }
+
+/* UPDATED: center links */
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  flex: 1;                /* takes available space */
+  justify-content: center; /* centers menu */
+}
+
+/* Links style (same) */
+.nav-links a {
+  color: rgba(255,255,255,0.7);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover {
+  color: white;
+  text-decoration: none;
+}
+
+/* Button stays right automatically */
+.nav-demo {
+  background: var(--primary);
+  color: white !important;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  font-weight: 600 !important;
+  white-space: nowrap; /* prevents breaking */
+}
+
+.nav-demo:hover {
+  background: var(--primary-dark) !important;
+}
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(145deg, #1A1A2E 0%, #16213E 50%, #0F3460 100%);
+      padding: 120px 2rem 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 50%, rgba(255,107,53,0.12) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 30%, rgba(46,196,182,0.08) 0%, transparent 50%);
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255,107,53,0.15); border: 1px solid rgba(255,107,53,0.3); color: var(--primary); padding: 0.4rem 1rem; border-radius: 999px; font-size: 0.85rem; font-weight: 600; margin-bottom: 1.5rem; font-family: 'Sora', sans-serif; }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; color: white; margin-bottom: 1rem; }
+    .hero h1 span { color: var(--primary); }
+    .hero p { color: rgba(255,255,255,0.65); font-size: 1.1rem; max-width: 620px; margin: 0 auto 2rem; }
+    .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.75rem; border-radius: 999px; font-weight: 600; font-size: 0.9rem; font-family: 'Sora', sans-serif; transition: all 0.2s; cursor: pointer; border: none; }
+    .btn-primary { background: var(--primary); color: white; box-shadow: 0 4px 20px rgba(255,107,53,0.35); }
+    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); text-decoration: none; color: white; }
+    .btn-outline { background: transparent; color: white; border: 1.5px solid rgba(255,255,255,0.3); }
+    .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.05); text-decoration: none; color: white; }
+    .hero-stats { display: flex; justify-content: center; gap: 3rem; margin-top: 3rem; flex-wrap: wrap; }
+    .hero-stat-num { font-size: 2rem; font-weight: 800; color: white; font-family: 'Sora', sans-serif; }
+    .hero-stat-label { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-top: 0.2rem; }
+
+    /* SECTIONS */
+    section { padding: 80px 2rem; }
+    .container { max-width: 1000px; margin: 0 auto; }
+    .section-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--primary); font-family: 'Sora', sans-serif; margin-bottom: 0.75rem; }
+    .section-title { font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 800; color: var(--text); margin-bottom: 0.75rem; }
+    .section-sub { color: var(--text2); font-size: 1rem; max-width: 600px; margin-bottom: 3rem; }
+
+    /* OVERVIEW */
+    .overview { background: white; }
+    .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .overview-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; }
+    .overview-card h4 { font-size: 0.9rem; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; font-family: 'Sora', sans-serif; }
+    .overview-card p { color: var(--text2); font-size: 0.9375rem; line-height: 1.7; }
+
+    /* PROBLEM */
+    .problem { background: var(--surface2); }
+    .problem-points { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; }
+    .problem-card { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 1.25rem 1.5rem; display: flex; gap: 1rem; align-items: flex-start; }
+    .problem-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.1rem; }
+    .problem-card h4 { font-size: 0.9375rem; font-weight: 600; margin-bottom: 0.3rem; }
+    .problem-card p { font-size: 0.875rem; color: var(--text2); }
+
+    /* FEATURES */
+    .features { background: white; }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+    .feature-card { border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; transition: all 0.25s; }
+    .feature-card:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.08); transform: translateY(-3px); }
+    .feature-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 1.3rem; }
+    .feature-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .feature-card ul { padding-left: 1.25rem; color: var(--text2); font-size: 0.875rem; }
+    .feature-card ul li { margin-bottom: 0.3rem; }
+
+    /* TECH */
+    .tech { background: var(--surface2); }
+    .tech-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
+    .tech-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; }
+    .tech-card h4 { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text3); margin-bottom: 0.875rem; font-family: 'Sora', sans-serif; }
+    .tech-item { display: flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0; border-bottom: 1px solid var(--border); font-size: 0.875rem; }
+    .tech-item:last-child { border-bottom: none; }
+    .tech-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ARCHITECTURE */
+    .architecture { background: white; }
+    .arch-diagram { background: #0F1117; border-radius: 16px; padding: 2.5rem; margin-bottom: 2rem; overflow-x: auto; }
+    .arch-diagram pre { color: #E2E8F0; font-family: 'Courier New', monospace; font-size: 0.85rem; line-height: 1.8; }
+    .arch-boxes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .arch-box { border-radius: 12px; padding: 1.25rem; text-align: center; }
+    .arch-box h4 { font-size: 0.875rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .arch-box p { font-size: 0.8rem; color: var(--text2); }
+
+    /* DATABASE */
+    .database { background: var(--surface2); }
+    .db-table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.06); margin-bottom: 1.5rem; }
+    .db-table th { background: var(--dark); color: white; padding: 0.875rem 1.25rem; text-align: left; font-size: 0.8rem; font-family: 'Sora', sans-serif; letter-spacing: 0.05em; text-transform: uppercase; }
+    .db-table td { padding: 0.875rem 1.25rem; border-bottom: 1px solid var(--border); font-size: 0.875rem; }
+    .db-table tr:last-child td { border-bottom: none; }
+    .db-table tr:hover td { background: var(--surface2); }
+    code { background: var(--surface2); border: 1px solid var(--border); padding: 0.1rem 0.4rem; border-radius: 5px; font-size: 0.82rem; font-family: 'Courier New', monospace; color: var(--primary); }
+
+    /* API */
+    .api { background: white; }
+    .api-group { margin-bottom: 2rem; }
+    .api-group h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.875rem; }
+    .api-table { width: 100%; table-layout: fixed; border-collapse: collapse; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
+    .api-table th { background: var(--surface2); padding: 0.6rem 1rem; text-align: left; font-size: 0.78rem; color: var(--text3); font-family: 'Sora', sans-serif; letter-spacing: 0.06em; text-transform: uppercase; }
+    .api-table td { padding: 0.6rem 1rem; border-bottom: 1px solid var(--border); font-size: 0.875rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .api-table tr:last-child td { border-bottom: none; }
+    .api-table th:nth-child(1), .api-table td:nth-child(1) { width: 15%; }
+    .api-table th:nth-child(2), .api-table td:nth-child(2) { width: 35%; }
+    .api-table th:nth-child(3), .api-table td:nth-child(3) { width: 15%; }
+    .api-table th:nth-child(4), .api-table td:nth-child(4) { width: 25%; }
+    .method { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.72rem; font-weight: 700; font-family: 'Sora', sans-serif; }
+    .get { background: #ECFDF5; color: #059669; }
+    .post { background: #EFF6FF; color: #2563EB; }
+    .put { background: #FFFBEB; color: #D97706; }
+    .del { background: #FEF2F2; color: #DC2626; }
+    .auth-badge { font-size: 0.72rem; padding: 0.15rem 0.5rem; border-radius: 4px; font-weight: 600; }
+    .public { background: #F0FDF4; color: #16A34A; }
+    .required { background: #FFF7ED; color: #EA580C; }
+    .admin { background: #FEF2F2; color: #DC2626; }
+    .mod { background: #F5F3FF; color: #7C3AED; }
+
+    /* DEPLOYMENT */
+    .deployment { background: var(--surface2); }
+    .deploy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .deploy-card { background: white; border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; }
+    .deploy-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 1rem; }
+    .deploy-step { display: flex; gap: 0.875rem; margin-bottom: 0.875rem; align-items: flex-start; }
+    .step-num { width: 26px; height: 26px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; flex-shrink: 0; }
+    .step-text { font-size: 0.875rem; color: var(--text2); padding-top: 0.25rem; }
+    .env-block { background: #0F1117; border-radius: 10px; padding: 1rem 1.25rem; margin-top: 1rem; }
+    .env-block pre { color: #A8B3CF; font-size: 0.8rem; font-family: 'Courier New', monospace; line-height: 1.8; }
+    .ekey { color: #79C0FF; }
+    .eval { color: #A8FF78; }
+
+    /* SECURITY */
+    .security { background: white; }
+    .security-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+    .security-card { border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; display: flex; gap: 1rem; }
+    .security-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .security-card h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.25rem; }
+    .security-card p { font-size: 0.8rem; color: var(--text2); }
+
+    /* FUTURE */
+    .future { background: var(--surface2); }
+    .future-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
+    .future-item { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 1.1rem 1.25rem; display: flex; align-items: center; gap: 0.75rem; font-size: 0.9rem; font-weight: 500; }
+    .future-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border); flex-shrink: 0; }
+
+    /* CTA */
+    .cta { background: linear-gradient(135deg, #1A1A2E, #0F3460); padding: 80px 2rem; text-align: center; }
+    .cta h2 { font-size: 2rem; color: white; margin-bottom: 0.75rem; }
+    .cta p { color: rgba(255,255,255,0.6); margin-bottom: 2rem; }
+    .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    /* FOOTER */
+    footer { background: var(--dark); color: rgba(255,255,255,0.5); text-align: center; padding: 2rem; font-size: 0.875rem; }
+    footer strong { color: var(--primary); }
+
+    @media (max-width: 768px) {
+      .overview-grid, .deploy-grid, .arch-boxes { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .hero { padding: 90px 1.25rem 60px; }
+      .hero-stats { gap: 1.5rem; }
+      section { padding: 60px 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-brand">
+    &#127968; 
+    <span>Hometown<strong style="color:var(--primary)">Hub</strong></span>
+  </div>
+
+  <div class="nav-links">
+    <a href="#overview">Overview</a>
+    <a href="#features">Features</a>
+    <a href="#tech">Tech Stack</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#database">Database</a>
+    <a href="#api">API</a>
+    <a href="#deployment">Deployment</a>
+  </div>
+
+  <a href="https://hometown-hub-6q6p.vercel.app" target="_blank" class="nav-demo">
+    Live Demo
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Detailed Project Report</div>
+    <h1>&#127968; <span>Hometown Hub</span><br/>Digital Community Platform</h1>
+    <p>A scalable modern full-stack web application connecting people with their hometown communities — enabling local networking, event organization, and cultural preservation.</p>
+    <div class="hero-buttons">
+      <a href="https://hometown-hub-6q6p.vercel.app" target="_blank" class="btn btn-primary">Live Application</a>
+      <a href="https://github.com/ChetanSenta/Hometown_Hub" target="_blank" class="btn btn-outline">GitHub Repository</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-num">6</div><div class="hero-stat-label">Communities</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">8</div><div class="hero-stat-label">DB Tables</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">35+</div><div class="hero-stat-label">API Endpoints</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">3</div><div class="hero-stat-label">Deployed Services</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- OVERVIEW -->
+<section class="overview" id="overview">
+  <div class="container">
+    <div class="section-label">Project Overview</div>
+    <h2 class="section-title">What is Hometown Hub?</h2>
+    <p class="section-sub">A platform that solves the real problem of disconnection people face when they move away from their hometowns.</p>
+    <div class="overview-grid">
+      <div class="overview-card">
+        <h4>Problem Statement</h4>
+        <p>People who migrate to different cities for work or education lose connection with their hometown communities. Existing social media platforms are too broad and do not provide a focused space for hyperlocal interaction, community updates, and local collaboration.</p>
+      </div>
+      <div class="overview-card">
+        <h4>Our Solution</h4>
+        <p>Hometown Hub creates a dedicated digital community space where individuals from the same city, village, or hometown can connect, communicate, organize events, and preserve local culture — no matter where they currently live.</p>
+      </div>
+      <div class="overview-card">
+        <h4>Primary Objectives</h4>
+        <p>Enable people from the same city or village to connect digitally. Create a centralized platform for community updates and discussions. Support local event organization and strengthen community bonding through participation.</p>
+      </div>
+      <div class="overview-card">
+        <h4>Project Scope</h4>
+        <p>Web-based responsive platform with community creation and membership, posts and discussions, event management, real-time notifications, user profiles with hometown details, and a comprehensive admin dashboard for platform moderation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem" id="problem">
+  <div class="container">
+    <div class="section-label">Problem Analysis</div>
+    <h2 class="section-title">Challenges We Address</h2>
+    <p class="section-sub">Current challenges in community networking that motivated this project.</p>
+    <div class="problem-points">
+      <div class="problem-card">
+        <div class="problem-icon" style="background:#FEF2F2;color:#EF4444;">&#10060;</div>
+        <div><h4>No Dedicated Platform</h4><p>Lack of focused platforms for local or hometown communities — people scatter across generic social media.</p></div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon" style="background:#FFF7ED;color:#F59E0B;">&#128172;</div>
+        <div><h4>Scattered Communication</h4><p>Community communication scattered across WhatsApp groups with no structure or searchability.</p></div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon" style="background:#F0FDF4;color:#10B981;">&#128226;</div>
+        <div><h4>No Announcement System</h4><p>No structured system for local announcements or events — important news gets lost in chat noise.</p></div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon" style="background:#EFF6FF;color:#3B82F6;">&#128269;</div>
+        <div><h4>Limited Local Visibility</h4><p>Limited visibility of local issues, news, and community initiatives reaching the right people.</p></div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon" style="background:#F5F3FF;color:#8B5CF6;">&#129309;</div>
+        <div><h4>Reconnection Difficulty</h4><p>Difficulty reconnecting with people from the same hometown after moving to a new city.</p></div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon" style="background:#ECFDF5;color:#10B981;">&#127917;</div>
+        <div><h4>Cultural Preservation</h4><p>Local culture, traditions, and regional identity gradually fading without a digital home to preserve them.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="container">
+    <div class="section-label">Core Features</div>
+    <h2 class="section-title">What the Platform Offers</h2>
+    <p class="section-sub">Six major feature modules built into the platform.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#FFF0EB;color:#FF6B35;">&#127750;</div>
+        <h3>Community Management</h3>
+        <ul>
+          <li>Create city, village, cultural communities</li>
+          <li>Join with one click — leave anytime</li>
+          <li>Moderator roles with pin and manage powers</li>
+          <li>Search and filter by city or category</li>
+          <li>Full member directory per community</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#E8FAF9;color:#2EC4B6;">&#128221;</div>
+        <h3>Posts and Announcements</h3>
+        <ul>
+          <li>Post types: regular, announcement, question, alert</li>
+          <li>Like and unlike with real-time counts</li>
+          <li>Moderators can pin key posts to top</li>
+          <li>Personalized feed from joined communities</li>
+          <li>Tag system for post categorization</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#F5F3FF;color:#845EC2;">&#127881;</div>
+        <h3>Event Management</h3>
+        <ul>
+          <li>Create online and offline events</li>
+          <li>RSVP: Going, Interested, Not Going</li>
+          <li>Capacity control with full-house detection</li>
+          <li>Event categories: cultural, sports, education</li>
+          <li>Full attendee list per event</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#FFFBEB;color:#F59E0B;">&#128276;</div>
+        <h3>Notifications</h3>
+        <ul>
+          <li>Real-time unread badge in navbar</li>
+          <li>Types: likes, joins, events, announcements</li>
+          <li>Mark individual or all as read</li>
+          <li>Auto-refresh every 30 seconds</li>
+          <li>Delete unwanted notifications</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#F0FDF4;color:#10B981;">&#128100;</div>
+        <h3>User Profiles</h3>
+        <ul>
+          <li>Name, bio, hometown, current city</li>
+          <li>Auto-generated gradient avatars</li>
+          <li>View all joined communities</li>
+          <li>Secure password change with validation</li>
+          <li>Role badges: Admin, Verified</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#FEF2F2;color:#EF4444;">&#9881;</div>
+        <h3>Admin Dashboard</h3>
+        <ul>
+          <li>Live platform statistics</li>
+          <li>Ban and unban users, change roles</li>
+          <li>Activate or suspend communities</li>
+          <li>Review and remove flagged posts</li>
+          <li>Search users and communities</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH STACK -->
+<section class="tech" id="tech">
+  <div class="container">
+    <div class="section-label">Technology Stack</div>
+    <h2 class="section-title">Built With</h2>
+    <p class="section-sub">Modern, production-grade technologies across the full stack.</p>
+    <div class="tech-grid">
+      <div class="tech-card">
+        <h4>Frontend</h4>
+        <div class="tech-item"><div class="tech-dot" style="background:#61DAFB;"></div>React 18.2.0</div>
+        <div class="tech-item"><div class="tech-dot" style="background:#CA4245;"></div>React Router DOM 6</div>
+        <div class="tech-item"><div class="tech-dot" style="background:#FF6B35;"></div>Lucide React Icons</div>
+        <div class="tech-item"><div class="tech-dot" style="background:#5A29E4;"></div>Axios HTTP Client</div>
+        <div class="tech-item"><div class="tech-dot" style="background:#770C56;"></div>date-fns</div>
+        <div class="tech-item"><div class="tech-dot" style="background:#2EC4B6;"></div>CSS Custom Properties</div>
+      </div>
+      <div class="tech-card">
+        <h4>Backend</h4>
+        <div class="tech-item"><div class="tech-dot" style="background:#339933;"></div>Node.js 18+</div>
+        <div class="tech-item"><div class="tech-dot" style="background:#000000;"></div>Express.js 4.18</div>
+        <div class="tech-item"><div class="tech-dot" style="background:#003545;"></div>bcryptjs</div>
+        <div class="tech-item"><div class="tech-dot" style="background:#D63AFF;"></div>jsonwebtoken</div>
+        <div class="tech-item"><div class="tech-dot" style="background:#F59E0B;"></div>express-validator</div>
+        <div class="tech-item"><div class="tech-dot" style="background:#10B981;"></div>cors + dotenv</div>
+      </div>
+      <div class="tech-card">
+        <h4>Database</h4>
+        <div class="tech-item"><div class="tech-dot" style="background:#4169E1;"></div>PostgreSQL 15</div>
+        <div class="tech-item"><div class="tech-dot" style="background:#336791;"></div>pg node-postgres</div>
+        <div class="tech-item"><div class="tech-dot" style="background:#845EC2;"></div>uuid-ossp extension</div>
+        <div class="tech-item"><div class="tech-dot" style="background:#2EC4B6;"></div>JSONB tag storage</div>
+        <div class="tech-item"><div class="tech-dot" style="background:#FF6B35;"></div>Partial indexes</div>
+        <div class="tech-item"><div class="tech-dot" style="background:#10B981;"></div>SSL in production</div>
+      </div>
+      <div class="tech-card">
+        <h4>Deployment</h4>
+        <div class="tech-item"><div class="tech-dot" style="background:#000000;"></div>Vercel (Frontend)</div>
+        <div class="tech-item"><div class="tech-dot" style="background:#46E3B7;"></div>Render (Backend)</div>
+        <div class="tech-item"><div class="tech-dot" style="background:#4169E1;"></div>Render PostgreSQL</div>
+        <div class="tech-item"><div class="tech-dot" style="background:#F05032;"></div>GitHub CI/CD</div>
+        <div class="tech-item"><div class="tech-dot" style="background:#2496ED;"></div>Docker Compose</div>
+        <div class="tech-item"><div class="tech-dot" style="background:#F59E0B;"></div>Environment Variables</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section class="architecture" id="architecture">
+  <div class="container">
+    <div class="section-label">System Architecture</div>
+    <h2 class="section-title">How It All Connects</h2>
+    <p class="section-sub">Three-tier architecture with separated frontend, backend, and database layers.</p>
+    <div class="arch-diagram">
+      <pre>
+  +----------------------------------------------------------+
+  |                     USER BROWSER                         |
+  |              React SPA hosted on Vercel                  |
+  +-------------------------+--------------------------------+
+                            |  HTTPS via REACT_APP_API_URL
+                            v
+  +----------------------------------------------------------+
+  |              RENDER WEB SERVICE                          |
+  |            Node.js + Express.js REST API                 |
+  |                                                          |
+  |   +----------+  +----------+  +----------+  +--------+   |
+  |   |   Auth   |  |Community |  |  Posts   |  | Events |   |
+  |   |  Routes  |  |  Routes  |  |  Routes  |  | Routes |   |
+  |   +----------+  +----------+  +----------+  +--------+   |
+  |                                                          |
+  |   +--------------------------------------------------+   |
+  |   |  Middleware: Auth Guard, Validator, ErrorHandler |   |
+  |   +--------------------------------------------------+   |
+  +-------------------------+--------------------------------+
+                            |  pg Pool with SSL (DATABASE_URL)
+                            v
+  +----------------------------------------------------------+
+  |             RENDER POSTGRESQL DATABASE                   |
+  |                                                          |
+  |   users  communities  memberships  posts  post_likes     |
+  |   events  event_attendees  notifications                 |
+  +----------------------------------------------------------+</pre>
+    </div>
+    <div class="arch-boxes">
+      <div class="arch-box" style="background:#FFF0EB;border:1px solid #FFD4C2;">
+        <h4 style="color:#FF6B35;">Frontend Layer</h4>
+        <p>React SPA on Vercel CDN. AuthContext for state management, Axios for API calls, React Router for navigation and protected routes.</p>
+      </div>
+      <div class="arch-box" style="background:#E8FAF9;border:1px solid #B2EDE8;">
+        <h4 style="color:#2EC4B6;">API Layer</h4>
+        <p>Express REST API on Render. JWT middleware guards routes. Controllers handle all business logic. pg pool manages database connections.</p>
+      </div>
+      <div class="arch-box" style="background:#EFF6FF;border:1px solid #BFDBFE;">
+        <h4 style="color:#3B82F6;">Data Layer</h4>
+        <p>Render-managed PostgreSQL with SSL. 8 relational tables, UUID primary keys, JSONB tags, and partial indexes for performance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DATABASE -->
+<section class="database" id="database">
+  <div class="container">
+    <div class="section-label">Database Design</div>
+    <h2 class="section-title">PostgreSQL Schema</h2>
+    <p class="section-sub">8 relational tables with UUID primary keys, foreign key constraints, and optimized indexes.</p>
+    <table class="db-table">
+      <thead>
+        <tr><th>Table</th><th>Primary Key</th><th>Key Columns</th><th>Purpose</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>users</code></td><td>UUID</td><td>email, role, hometown, is_banned</td><td>User accounts and profiles</td></tr>
+        <tr><td><code>communities</code></td><td>UUID</td><td>slug, city, category, creator_id</td><td>Community groups</td></tr>
+        <tr><td><code>memberships</code></td><td>Composite</td><td>user_id, community_id, role</td><td>User-community relationship</td></tr>
+        <tr><td><code>posts</code></td><td>UUID</td><td>type, tags (JSONB), is_pinned, is_deleted</td><td>Community posts with soft delete</td></tr>
+        <tr><td><code>post_likes</code></td><td>Composite</td><td>post_id, user_id</td><td>Post engagement tracking</td></tr>
+        <tr><td><code>events</code></td><td>UUID</td><td>start_date, max_attendees, is_online</td><td>Community events</td></tr>
+        <tr><td><code>event_attendees</code></td><td>Composite</td><td>event_id, user_id, status</td><td>RSVP tracking</td></tr>
+        <tr><td><code>notifications</code></td><td>UUID</td><td>type, is_read, recipient_id</td><td>In-app notification system</td></tr>
+      </tbody>
+    </table>
+    <div style="background:white;border:1px solid var(--border);border-radius:12px;padding:1.5rem;">
+      <h4 style="margin-bottom:1rem;font-size:0.95rem;font-family:'Sora',sans-serif;">Key Design Decisions</h4>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div style="font-size:0.875rem;color:var(--text2);"><strong style="color:var(--text);">UUID Keys</strong> — uuid-ossp extension generates all primary keys for distributed safety.</div>
+        <div style="font-size:0.875rem;color:var(--text2);"><strong style="color:var(--text);">Soft Deletes</strong> — Posts use <code>is_deleted</code> flag; data preserved for moderation history.</div>
+        <div style="font-size:0.875rem;color:var(--text2);"><strong style="color:var(--text);">JSONB Tags</strong> — Post tags stored as native PostgreSQL JSONB for flexible querying.</div>
+        <div style="font-size:0.875rem;color:var(--text2);"><strong style="color:var(--text);">Partial Index</strong> — <code>WHERE is_read = FALSE</code> on notifications for fast unread badge queries.</div>
+        <div style="font-size:0.875rem;color:var(--text2);"><strong style="color:var(--text);">Denormalized Counts</strong> — member_count, like_count stored to avoid expensive COUNT(*) joins.</div>
+        <div style="font-size:0.875rem;color:var(--text2);"><strong style="color:var(--text);">SSL Support</strong> — Render PostgreSQL enforces SSL; handled via <code>rejectUnauthorized: false</code>.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- API -->
+<section class="api" id="api">
+  <div class="container">
+    <div class="section-label">API Documentation</div>
+    <h2 class="section-title">REST API Endpoints</h2>
+    <p class="section-sub">35+ endpoints across 6 route groups with role-based access control.</p>
+
+    <div class="api-group">
+      <h3>Authentication</h3>
+      <table class="api-table">
+        <thead><tr><th>Method</th><th>Endpoint</th><th>Auth</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><span class="method post">POST</span></td><td><code>/api/auth/register</code></td><td><span class="auth-badge public">Public</span></td><td>Create new account</td></tr>
+          <tr><td><span class="method post">POST</span></td><td><code>/api/auth/login</code></td><td><span class="auth-badge public">Public</span></td><td>Login and get JWT token</td></tr>
+          <tr><td><span class="method get">GET</span></td><td><code>/api/auth/me</code></td><td><span class="auth-badge required">Required</span></td><td>Get current user</td></tr>
+          <tr><td><span class="method put">PUT</span></td><td><code>/api/auth/profile</code></td><td><span class="auth-badge required">Required</span></td><td>Update profile details</td></tr>
+          <tr><td><span class="method put">PUT</span></td><td><code>/api/auth/change-password</code></td><td><span class="auth-badge required">Required</span></td><td>Change password</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="api-group">
+      <h3>Communities</h3>
+      <table class="api-table">
+        <thead><tr><th>Method</th><th>Endpoint</th><th>Auth</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><span class="method get">GET</span></td><td><code>/api/communities</code></td><td><span class="auth-badge public">Optional</span></td><td>List with search and filter</td></tr>
+          <tr><td><span class="method get">GET</span></td><td><code>/api/communities/my</code></td><td><span class="auth-badge required">Required</span></td><td>My joined communities</td></tr>
+          <tr><td><span class="method post">POST</span></td><td><code>/api/communities</code></td><td><span class="auth-badge required">Required</span></td><td>Create new community</td></tr>
+          <tr><td><span class="method post">POST</span></td><td><code>/api/communities/:id/join</code></td><td><span class="auth-badge required">Required</span></td><td>Join a community</td></tr>
+          <tr><td><span class="method del">DELETE</span></td><td><code>/api/communities/:id/leave</code></td><td><span class="auth-badge required">Required</span></td><td>Leave a community</td></tr>
+          <tr><td><span class="method get">GET</span></td><td><code>/api/communities/:id/members</code></td><td><span class="auth-badge public">Optional</span></td><td>View member list</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="api-group">
+      <h3>Posts</h3>
+      <table class="api-table">
+        <thead><tr><th>Method</th><th>Endpoint</th><th>Auth</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><span class="method get">GET</span></td><td><code>/api/posts/feed</code></td><td><span class="auth-badge required">Required</span></td><td>Personal community feed</td></tr>
+          <tr><td><span class="method get">GET</span></td><td><code>/api/posts</code></td><td><span class="auth-badge public">Optional</span></td><td>List all posts</td></tr>
+          <tr><td><span class="method post">POST</span></td><td><code>/api/posts</code></td><td><span class="auth-badge required">Required</span></td><td>Create new post</td></tr>
+          <tr><td><span class="method del">DELETE</span></td><td><code>/api/posts/:id</code></td><td><span class="auth-badge required">Required</span></td><td>Soft delete post</td></tr>
+          <tr><td><span class="method post">POST</span></td><td><code>/api/posts/:id/like</code></td><td><span class="auth-badge required">Required</span></td><td>Toggle like/unlike</td></tr>
+          <tr><td><span class="method put">PUT</span></td><td><code>/api/posts/:id/pin</code></td><td><span class="auth-badge mod">Moderator</span></td><td>Pin or unpin post</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="api-group">
+      <h3>Events</h3>
+      <table class="api-table">
+        <thead><tr><th>Method</th><th>Endpoint</th><th>Auth</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><span class="method get">GET</span></td><td><code>/api/events</code></td><td><span class="auth-badge public">Optional</span></td><td>List all events</td></tr>
+          <tr><td><span class="method post">POST</span></td><td><code>/api/events</code></td><td><span class="auth-badge required">Required</span></td><td>Create new event</td></tr>
+          <tr><td><span class="method post">POST</span></td><td><code>/api/events/:id/attend</code></td><td><span class="auth-badge required">Required</span></td><td>RSVP to event</td></tr>
+          <tr><td><span class="method get">GET</span></td><td><code>/api/events/:id/attendees</code></td><td><span class="auth-badge public">Optional</span></td><td>View attendee list</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="api-group">
+      <h3>Notifications</h3>
+      <table class="api-table">
+        <thead><tr><th>Method</th><th>Endpoint</th><th>Auth</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><span class="method get">GET</span></td><td><code>/api/notifications</code></td><td><span class="auth-badge required">Required</span></td><td>List all notifications</td></tr>
+          <tr><td><span class="method get">GET</span></td><td><code>/api/notifications/unread-count</code></td><td><span class="auth-badge required">Required</span></td><td>Unread badge count</td></tr>
+          <tr><td><span class="method put">PUT</span></td><td><code>/api/notifications/read-all</code></td><td><span class="auth-badge required">Required</span></td><td>Mark all as read</td></tr>
+          <tr><td><span class="method del">DELETE</span></td><td><code>/api/notifications/:id</code></td><td><span class="auth-badge required">Required</span></td><td>Delete notification</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="api-group">
+      <h3>Admin</h3>
+      <table class="api-table">
+        <thead><tr><th>Method</th><th>Endpoint</th><th>Auth</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><span class="method get">GET</span></td><td><code>/api/admin/stats</code></td><td><span class="auth-badge admin">Admin</span></td><td>Platform statistics</td></tr>
+          <tr><td><span class="method get">GET</span></td><td><code>/api/admin/users</code></td><td><span class="auth-badge admin">Admin</span></td><td>All users list</td></tr>
+          <tr><td><span class="method put">PUT</span></td><td><code>/api/admin/users/:id/ban</code></td><td><span class="auth-badge admin">Admin</span></td><td>Ban or unban user</td></tr>
+          <tr><td><span class="method put">PUT</span></td><td><code>/api/admin/communities/:id/status</code></td><td><span class="auth-badge admin">Admin</span></td><td>Change community status</td></tr>
+          <tr><td><span class="method get">GET</span></td><td><code>/api/admin/flagged-posts</code></td><td><span class="auth-badge admin">Admin</span></td><td>Review flagged content</td></tr>
+          <tr><td><span class="method del">DELETE</span></td><td><code>/api/admin/posts/:id</code></td><td><span class="auth-badge admin">Admin</span></td><td>Remove post</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- DEPLOYMENT -->
+<section class="deployment" id="deployment">
+  <div class="container">
+    <div class="section-label">Deployment</div>
+    <h2 class="section-title">Production Setup</h2>
+    <p class="section-sub">Frontend on Vercel, Backend and Database on Render — automated CI/CD via GitHub.</p>
+    <div class="deploy-grid">
+      <div class="deploy-card">
+        <h3>Frontend — Vercel</h3>
+        <div class="deploy-step"><div class="step-num">1</div><div class="step-text">Import GitHub repo on vercel.com</div></div>
+        <div class="deploy-step"><div class="step-num">2</div><div class="step-text">Set Root Directory to <code>frontend</code></div></div>
+        <div class="deploy-step"><div class="step-num">3</div><div class="step-text">Add environment variable</div></div>
+        <div class="deploy-step"><div class="step-num">4</div><div class="step-text">Deploy — auto-rebuilds on every GitHub push</div></div>
+        <div class="env-block">
+          <pre><span class="ekey">REACT_APP_API_URL</span>=<span class="eval">https://hometown-hub-api.onrender.com/api</span></pre>
+        </div>
+      </div>
+      <div class="deploy-card">
+        <h3>Backend — Render</h3>
+        <div class="deploy-step"><div class="step-num">1</div><div class="step-text">Create PostgreSQL database on Render</div></div>
+        <div class="deploy-step"><div class="step-num">2</div><div class="step-text">Create Web Service, Root Directory: <code>backend</code></div></div>
+        <div class="deploy-step"><div class="step-num">3</div><div class="step-text">Build: <code>npm install</code> | Start: <code>node server.js</code></div></div>
+        <div class="deploy-step"><div class="step-num">4</div><div class="step-text">Add environment variables and deploy</div></div>
+        <div class="env-block">
+          <pre><span class="ekey">DATABASE_URL</span>=<span class="eval">postgresql://...</span>
+<span class="ekey">JWT_SECRET</span>=<span class="eval">your_long_secret</span>
+<span class="ekey">CLIENT_URL</span>=<span class="eval">https://your-app.vercel.app</span>
+<span class="ekey">NODE_ENV</span>=<span class="eval">production</span></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECURITY -->
+<section class="security" id="security">
+  <div class="container">
+    <div class="section-label">Security</div>
+    <h2 class="section-title">Security Implementation</h2>
+    <p class="section-sub">Multiple layers of security protecting user data and platform integrity.</p>
+    <div class="security-grid">
+      <div class="security-card">
+        <div class="security-icon" style="background:#FFF0EB;color:#FF6B35;">&#128273;</div>
+        <div><h4>JWT Authentication</h4><p>Signed tokens with 7-day expiry. Verified on every request via protect middleware before route handlers run.</p></div>
+      </div>
+      <div class="security-card">
+        <div class="security-icon" style="background:#E8FAF9;color:#2EC4B6;">&#128274;</div>
+        <div><h4>Password Hashing</h4><p>bcryptjs with 12 salt rounds. Plaintext passwords are never stored or returned in API responses.</p></div>
+      </div>
+      <div class="security-card">
+        <div class="security-icon" style="background:#F5F3FF;color:#845EC2;">&#128737;</div>
+        <div><h4>Role-Based Access</h4><p>protect, adminOnly, and optionalAuth middleware guards every route based on user role.</p></div>
+      </div>
+      <div class="security-card">
+        <div class="security-icon" style="background:#FFFBEB;color:#F59E0B;">&#127760;</div>
+        <div><h4>CORS Whitelist</h4><p>Only registered frontend origins are allowed in production. All unknown origins are blocked.</p></div>
+      </div>
+      <div class="security-card">
+        <div class="security-icon" style="background:#F0FDF4;color:#10B981;">&#9989;</div>
+        <div><h4>SQL Injection Safe</h4><p>All database queries use parameterized placeholders. No string concatenation in queries.</p></div>
+      </div>
+      <div class="security-card">
+        <div class="security-icon" style="background:#FEF2F2;color:#EF4444;">&#128203;</div>
+        <div><h4>Input Validation</h4><p>express-validator runs on all POST and PUT request bodies before any business logic executes.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FUTURE -->
+<section class="future" id="future">
+  <div class="container">
+    <div class="section-label">Roadmap</div>
+    <h2 class="section-title">Future Enhancements</h2>
+    <p class="section-sub">Planned features for upcoming versions of Hometown Hub.</p>
+    <div class="future-grid">
+      <div class="future-item"><div class="future-dot"></div>Real-time chat with WebSockets</div>
+      <div class="future-item"><div class="future-dot"></div>Image uploads via Cloudinary</div>
+      <div class="future-item"><div class="future-dot"></div>Comment system on posts</div>
+      <div class="future-item"><div class="future-dot"></div>Mobile app with React Native</div>
+      <div class="future-item"><div class="future-dot"></div>PWA with push notifications</div>
+      <div class="future-item"><div class="future-dot"></div>Hindi and regional language support</div>
+      <div class="future-item"><div class="future-dot"></div>Local business directory</div>
+      <div class="future-item"><div class="future-dot"></div>Community analytics dashboard</div>
+      <div class="future-item"><div class="future-dot"></div>Verified community badges</div>
+      <div class="future-item"><div class="future-dot"></div>Advanced search and filters</div>
+      <div class="future-item"><div class="future-dot"></div>Export community reports</div>
+      <div class="future-item"><div class="future-dot"></div>Machine learning recommendations</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <h2>See It In Action</h2>
+  <p>Try the live application with the demo credentials provided below.</p>
+  <div class="cta-buttons">
+    <a href="https://hometown-hub-6q6p.vercel.app" target="_blank" class="btn btn-primary">Open Live App</a>
+    <a href="https://github.com/ChetanSenta/Hometown_Hub" target="_blank" class="btn btn-outline">View Source Code</a>
+  </div>
+  <div style="margin-top:2rem;display:flex;justify-content:center;gap:3rem;flex-wrap:wrap;">
+    <div style="text-align:center;">
+      <div style="color:rgba(255,255,255,0.5);font-size:0.8rem;margin-bottom:0.3rem;">Admin Login</div>
+      <div style="color:white;font-size:0.875rem;font-family:'Courier New',monospace;">admin@hometownhub.com / admin123</div>
+    </div>
+    <div style="text-align:center;">
+      <div style="color:rgba(255,255,255,0.5);font-size:0.8rem;margin-bottom:0.3rem;">User Login</div>
+      <div style="color:white;font-size:0.875rem;font-family:'Courier New',monospace;">priya@example.com / password123</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Built by <strong>Chetan Senta</strong> &nbsp;·&nbsp; Hometown Hub v1.0.0 </p>
+  <p style="margin-top:0.5rem;">
+    <a href="https://hometown-hub-6q6p.vercel.app" target="_blank" style="color:var(--primary);">Live App</a>
+    &nbsp;·&nbsp;
+    <a href="https://github.com/ChetanSenta/Hometown_Hub" target="_blank" style="color:rgba(255,255,255,0.5);">GitHub</a>
+    &nbsp;·&nbsp;
+    <a href="https://hometown-hub-api.onrender.com/api/health" target="_blank" style="color:rgba(255,255,255,0.5);">API Health</a>
+  </p>
+</footer>
+
+</body>
+</html>
